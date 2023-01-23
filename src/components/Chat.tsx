@@ -8,6 +8,7 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 import { MessageDirection } from "@chatscope/use-chat";
 import { useNewAvatar } from "../hooks/useNewAvatar";
+import { useAppModel } from "../store/store";
 
 const state = {
 	word: "Ampel",
@@ -29,10 +30,24 @@ const state = {
 	],
 };
 
-export const Chat = () => {
+export const ChatComponent = () => {
 	const useAvatar = useNewAvatar(),
 		avatar = useAvatar(state.word),
 		lastMessageTime = state.messages[state.messages.length - 1].sentTime;
+
+	const { conversations, addMessage } = useAppModel();
+
+	console.log(conversations);
+
+	const handleSend = (message: string) => {
+		console.log(message);
+		addMessage("1", {
+			message: message,
+			sender: "user",
+			direction: "outgoing",
+			position: "single",
+		});
+	};
 
 	return (
 		<ChatContainer>
@@ -44,11 +59,15 @@ export const Chat = () => {
 				/>
 			</ConversationHeader>
 			<MessageList>
-				{state.messages.map((message, index) => (
+				{conversations[0].messages.map((message, index) => (
 					<Message model={message} key={index} />
 				))}
 			</MessageList>
-			<MessageInput attachButton={false} placeholder="Type message here" />
+			<MessageInput
+				attachButton={false}
+				placeholder="Type message here"
+				onSend={handleSend}
+			/>
 		</ChatContainer>
 	);
 };

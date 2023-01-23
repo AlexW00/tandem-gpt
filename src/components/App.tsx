@@ -1,12 +1,14 @@
 import { MainContainer } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import { Chat } from "./Chat";
+import { ChatProviderComponent } from "./ChatProvider";
+import { ChatComponent } from "./Chat";
+import { HomeComponent } from "./Home";
 
 const App = () => (
 	<div style={{ position: "relative", height: "100%" }}>
-		<MainContainer>
-			<Chat />
-		</MainContainer>
+		<ChatProviderComponent>
+			<HomeComponent />
+		</ChatProviderComponent>
 	</div>
 );
 
