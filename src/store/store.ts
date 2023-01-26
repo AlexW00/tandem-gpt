@@ -17,7 +17,6 @@ export const useAppModel = create(
 				const conversation = state.conversations.find(
 					(c) => c.id === conversationId
 				);
-				console.log("pushing to conversation", conversation);
 				if (conversation) {
 					conversation.messages.push(message);
 				}

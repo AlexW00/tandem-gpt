@@ -1,15 +1,18 @@
 import { MainContainer } from "@chatscope/chat-ui-kit-react";
-import { ChatProviderComponent } from "./ChatProvider";
+import { ConversationIdContext } from "../contexts/ConversationIdContext";
+import { useActiveConversationId } from "../hooks/store/get/useActiveConversationId";
 import { ChatComponent } from "./Chat";
 import { SidebarComponent } from "./Sidebar";
-import { useStore } from "zustand";
-import { useAppModel } from "../store/store";
 
 export const HomeComponent = () => {
+	const activeConversationId = useActiveConversationId();
+
 	return (
 		<MainContainer responsive>
 			<SidebarComponent />
-			<ChatComponent />
+			<ConversationIdContext.Provider value={activeConversationId}>
+				<ChatComponent />
+			</ConversationIdContext.Provider>
 		</MainContainer>
 	);
 };

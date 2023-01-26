@@ -21,6 +21,8 @@ export interface Bot extends Participant {
 	description: string;
 }
 
+export type Message = MessageModel;
+
 export interface Conversation {
 	id: string;
 	bot: Bot;
@@ -29,6 +31,7 @@ export interface Conversation {
 
 export interface AppModel {
 	conversations: Conversation[];
+	activeConversationId: string;
 }
 
 // Default
@@ -61,5 +64,26 @@ export const DefaultAppModel: AppModel = {
 				},
 			],
 		},
+		{
+			id: "2",
+			bot: {
+				name: "Bot 2",
+				avatar: "https://i.pravatar.cc/150?img=1",
+				description: "I am another bot",
+				studyInfo: {
+					speaks: Language.en,
+					learns: Language.de,
+				},
+			},
+			messages: [
+				{
+					message: "Hellossss",
+					sender: "bot",
+					direction: "incoming",
+					position: "single",
+				},
+			],
+		},
 	],
+	activeConversationId: "1",
 };

@@ -5,37 +5,24 @@ import {
 	Avatar,
 	Sidebar,
 } from "@chatscope/chat-ui-kit-react";
-
-const state = {
-	conversations: [
-		{
-			name: "Hausaufgaben",
-			lastSenderName: "Hausaufgaben",
-			info: "Yes i can do it for you",
-		},
-
-		{
-			name: "Brot",
-			lastSenderName: "Brot",
-			info: "xy",
-		},
-	],
-};
+import { useConversations } from "../hooks/store/get/useConversations";
+import { useSetActiveConversationId } from "../hooks/store/set/useSetActiveConversationId";
 
 export const SidebarComponent = () => {
+	const conversations = useConversations(),
+		setActiveConversationId = useSetActiveConversationId();
 	return (
 		<Sidebar position="left" scrollable={false}>
-			{/* <Search placeholder="Search..." /> */}
-
 			<ConversationList>
-				{state.conversations.map((c, i) => (
+				{conversations.map((c, i) => (
 					<Conversation
 						key={i}
-						name={c.name}
-						info={c.info}
-						lastSenderName={c.lastSenderName}
+						name={c.bot.name}
+						info={c.bot.description}
+						lastSenderName={c.messages[c.messages.length - 1].sender}
+						onClick={() => setActiveConversationId(c.id)}
 					>
-						<Avatar name={c.name}></Avatar>
+						<Avatar name={c.bot.name} src={c.bot.avatar}></Avatar>
 					</Conversation>
 				))}
 			</ConversationList>

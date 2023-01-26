@@ -6,34 +6,13 @@ import {
 	Avatar,
 	ConversationHeader,
 } from "@chatscope/chat-ui-kit-react";
-import { MessageDirection } from "@chatscope/use-chat";
-import { useNewAvatar } from "../hooks/useNewAvatar";
+import { useConversationId } from "../hooks/context/useConversationId";
+import { useConversation } from "../hooks/store/get/useConversation";
 import { useAppModel } from "../store/store";
 
-const state = {
-	word: "Ampel",
-	messages: [
-		{
-			message: "Hello my friend",
-			sentTime: "5 minutes ago",
-			timestamp: Date.now() - 5000,
-			direction: MessageDirection.Outgoing,
-			position: "single",
-		},
-		{
-			message: "Hello back",
-			sentTime: "just now",
-			timestamp: Date.now(),
-			direction: MessageDirection.Incoming,
-			position: "single",
-		},
-	],
-};
-
 export const ChatComponent = () => {
-	const useAvatar = useNewAvatar(),
-		avatar = useAvatar(state.word),
-		lastMessageTime = state.messages[state.messages.length - 1].sentTime;
+	const conversationId = useConversationId(),
+		conversation = useConversation(conversationId)!;
 
 	const { conversations, addMessage } = useAppModel();
 
@@ -41,7 +20,7 @@ export const ChatComponent = () => {
 
 	const handleSend = (message: string) => {
 		console.log(message);
-		addMessage("1", {
+		addMessage(conversationId, {
 			message: message,
 			sender: "user",
 			direction: "outgoing",
@@ -52,14 +31,14 @@ export const ChatComponent = () => {
 	return (
 		<ChatContainer>
 			<ConversationHeader>
-				<Avatar src={avatar} name={state.word} />
+				<Avatar src={conversation.bot.avatar} name={conversation.bot.name} />
 				<ConversationHeader.Content
-					userName={state.word}
-					info={lastMessageTime}
+					userName={conversation.bot.name}
+					info={conversation.bot.description}
 				/>
 			</ConversationHeader>
 			<MessageList>
-				{conversations[0].messages.map((message, index) => (
+				{conversation.messages.map((message, index) => (
 					<Message model={message} key={index} />
 				))}
 			</MessageList>
