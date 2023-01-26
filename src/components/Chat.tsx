@@ -8,19 +8,17 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 import { useConversationId } from "../hooks/context/useConversationId";
 import { useConversation } from "../hooks/store/get/useConversation";
+import { useAddMessage } from "../hooks/store/set/useAddMessage";
 import { useAppModel } from "../store/store";
 
 export const ChatComponent = () => {
 	const conversationId = useConversationId(),
-		conversation = useConversation(conversationId)!;
-
-	const { conversations, addMessage } = useAppModel();
-
-	console.log(conversations);
+		conversation = useConversation(conversationId)!,
+		addMessage = useAddMessage(conversationId);
 
 	const handleSend = (message: string) => {
 		console.log(message);
-		addMessage(conversationId, {
+		addMessage({
 			message: message,
 			sender: "user",
 			direction: "outgoing",
