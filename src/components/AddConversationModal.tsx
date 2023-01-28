@@ -20,6 +20,8 @@ import { useGptApi } from "../hooks/context/useGptApi";
 import { useAppLanguage } from "../hooks/store/get/useAppLanguage";
 import { useDefaultLanguage } from "../hooks/store/get/useDefaultLanguage";
 import { useAddConversation } from "../hooks/store/set/useAddConversation";
+import { useAddMessage } from "../hooks/store/set/useAddMessage";
+import { useSetTyping } from "../hooks/store/set/useSetTyping";
 import { useNewAvatar } from "../hooks/util/useNewAvatar";
 import { Conversation } from "../store/AppModel";
 
@@ -43,8 +45,12 @@ export const AddConversationModal = ({
 	const [prompt, setPrompt] = React.useState<string>("");
 	const [language, setLanguage] = React.useState<Language>(defaultLanguage);
 
+	const ts = Date.now().toString();
+
 	const addConversation = useAddConversation(),
-		createAvatar = useNewAvatar();
+		addMessage = useAddMessage(ts),
+		createAvatar = useNewAvatar(),
+		setTyping = useSetTyping(ts);
 
 	const handleFormChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setLanguage(e.target.value as Language);
@@ -80,12 +86,13 @@ export const AddConversationModal = ({
 		}
 
 		const conversation: Conversation = {
-			id: Date.now().toString(),
+			id: ts,
 			bot: {
 				name: prompt,
 				avatar: createAvatar(prompt),
 				description: getFlag(language) + " " + language,
 				prompt: prompt,
+				isTyping: true,
 				studyInfo: {
 					speaks: language,
 					learns: appLanguage,
@@ -94,12 +101,18 @@ export const AddConversationModal = ({
 			messages: [],
 		};
 
+		addConversation(conversation);
+		showAddedConversationToast();
+		resetForm();
+		onClose();
+
+		console.log("making request to gpt api");
+
 		api.start(conversation).then((message) => {
+			console.log("got response from gpt api");
 			if (message) {
-				addConversation({ ...conversation, messages: [message] });
-				showAddedConversationToast();
-				resetForm();
-				onClose();
+				addMessage(message);
+				setTyping(false);
 			}
 		});
 	};

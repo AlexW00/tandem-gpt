@@ -17,10 +17,13 @@ const App = () => {
 
 	if (!apiKey) {
 		const key = prompt("Please enter your API key");
+
 		if (key) {
 			setApiKey(key);
 		}
 	}
+
+	api.setKey(apiKey!);
 
 	return (
 		<ChakraProvider>

@@ -5,15 +5,20 @@ import {
 	MessageInput,
 	Avatar,
 	ConversationHeader,
+	TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import { useConversationId } from "../hooks/context/useConversationId";
 import { useGptApi } from "../hooks/context/useGptApi";
 import { useConversation } from "../hooks/store/get/useConversation";
+import { useIsTyping } from "../hooks/store/get/useIsTyping";
 import { useAddMessage } from "../hooks/store/set/useAddMessage";
+import { useSetTyping } from "../hooks/store/set/useSetTyping";
 import { useAppModel } from "../store/store";
 
 export const ChatComponent = () => {
 	const conversationId = useConversationId(),
+		isTyping = useIsTyping(conversationId),
+		setTyping = useSetTyping(conversationId),
 		conversation = useConversation(conversationId)!,
 		addMessage = useAddMessage(conversationId);
 
@@ -35,10 +40,12 @@ export const ChatComponent = () => {
 			.then((message) => {
 				if (message) {
 					addMessage(message);
+					setTyping(false);
 				}
 			});
 
 		addMessage(msg);
+		setTyping(true);
 	};
 
 	return (
@@ -50,7 +57,9 @@ export const ChatComponent = () => {
 					info={conversation.bot.description}
 				/>
 			</ConversationHeader>
-			<MessageList>
+			<MessageList
+				typingIndicator={isTyping ? <TypingIndicator content="typing" /> : null}
+			>
 				{conversation.messages.map((message, index) => (
 					<Message model={message} key={index} />
 				))}

@@ -15,6 +15,7 @@ export interface Participant {
 export interface Bot extends Participant {
 	description: string;
 	prompt: string;
+	isTyping: boolean;
 }
 
 export type Message = MessageModel;
