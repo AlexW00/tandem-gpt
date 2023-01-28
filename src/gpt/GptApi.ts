@@ -60,7 +60,7 @@ class GptApi {
 			if (response.data.choices) {
 				const message: Message = {
 					message: response.data.choices[0].text?.trim(),
-					sender: "bot",
+					sender: "Bot",
 					direction: "incoming",
 					position: "single",
 				};

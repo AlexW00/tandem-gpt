@@ -37,8 +37,10 @@ export const SidebarComponent = () => {
 						<Conversation
 							key={i}
 							name={c.bot.name}
-							info={c.messages[c.messages.length - 1]?.message ?? ""}
-							lastSenderName={c.messages[c.messages.length - 1]?.sender ?? ""}
+							info={c.messages[c.messages.length - 1]?.message ?? "typing..."}
+							lastSenderName={
+								c.messages[c.messages.length - 1]?.sender ?? "Bot"
+							}
 							onClick={() => setActiveConversationId(c.id)}
 						>
 							<Avatar name={c.bot.name} src={c.bot.avatar}></Avatar>
