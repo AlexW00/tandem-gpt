@@ -16,6 +16,7 @@ import {
 import { Button } from "@chatscope/chat-ui-kit-react";
 import React from "react";
 import { getFlag, Language } from "../classes/Language";
+import { useGptApi } from "../hooks/context/useGptApi";
 import { useAppLanguage } from "../hooks/store/get/useAppLanguage";
 import { useDefaultLanguage } from "../hooks/store/get/useDefaultLanguage";
 import { useAddConversation } from "../hooks/store/set/useAddConversation";
@@ -36,6 +37,8 @@ export const AddConversationModal = ({
 
 	const appLanguage = useAppLanguage(),
 		defaultLanguage = useDefaultLanguage();
+
+	const api = useGptApi();
 
 	const [prompt, setPrompt] = React.useState<string>("");
 	const [language, setLanguage] = React.useState<Language>(defaultLanguage);
@@ -91,10 +94,14 @@ export const AddConversationModal = ({
 			messages: [],
 		};
 
-		addConversation(conversation);
-		showAddedConversationToast();
-		resetForm();
-		onClose();
+		api.start(conversation).then((message) => {
+			if (message) {
+				addConversation({ ...conversation, messages: [message] });
+				showAddedConversationToast();
+				resetForm();
+				onClose();
+			}
+		});
 	};
 
 	return (

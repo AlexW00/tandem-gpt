@@ -2,6 +2,7 @@ export enum Language {
 	en = "English",
 	de = "German",
 	jp = "Japanese",
+	kr = "Korean",
 }
 
 export const getFlag = (language: Language) => {
@@ -12,5 +13,7 @@ export const getFlag = (language: Language) => {
 			return "🇩🇪";
 		case Language.jp:
 			return "🇯🇵";
+		case Language.kr:
+			return "🇰🇷";
 	}
 };

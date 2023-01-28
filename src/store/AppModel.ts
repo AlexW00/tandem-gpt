@@ -28,6 +28,7 @@ export interface Conversation {
 export interface Preferences {
 	appLanguage: Language;
 	defaultLanguage: Language;
+	apiKey: string | undefined;
 }
 
 export interface AppModel {
@@ -39,59 +40,11 @@ export interface AppModel {
 // Default
 
 export const DefaultAppModel: AppModel = {
-	conversations: [
-		{
-			id: "1",
-			bot: {
-				name: "Bot 1",
-				avatar: "https://i.pravatar.cc/150?img=1",
-				description: "I am a bot",
-				studyInfo: {
-					speaks: Language.en,
-					learns: Language.de,
-				},
-				prompt: "Homework",
-			},
-			messages: [
-				{
-					message: "Hello",
-					sender: "bot",
-					direction: "incoming",
-					position: "single",
-				},
-				{
-					message: "Hi",
-					sender: "user",
-					direction: "outgoing",
-					position: "single",
-				},
-			],
-		},
-		{
-			id: "2",
-			bot: {
-				name: "Bot 2",
-				avatar: "https://i.pravatar.cc/150?img=2",
-				description: "I am another bot",
-				studyInfo: {
-					speaks: Language.en,
-					learns: Language.de,
-				},
-				prompt: "Sausage",
-			},
-			messages: [
-				{
-					message: "Hellossss",
-					sender: "bot",
-					direction: "incoming",
-					position: "single",
-				},
-			],
-		},
-	],
-	activeConversationId: "1",
+	conversations: [],
+	activeConversationId: "-1",
 	preferences: {
 		appLanguage: Language.en,
 		defaultLanguage: Language.jp,
+		apiKey: undefined,
 	},
 };

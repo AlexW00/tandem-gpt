@@ -4,13 +4,13 @@ import { immer } from "zustand/middleware/immer";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 export const useAppModel = create(
-	// persist(
-	immer<AppModel>(() => ({
-		...DefaultAppModel,
-	}))
-	// 	{
-	// 		name: "default-storage", // unique name
-	// 		storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
-	// 	}
-	// )
+	persist(
+		immer<AppModel>(() => ({
+			...DefaultAppModel,
+		})),
+		{
+			name: "default-storage", // unique name
+			storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+		}
+	)
 );

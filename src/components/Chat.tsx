@@ -7,6 +7,7 @@ import {
 	ConversationHeader,
 } from "@chatscope/chat-ui-kit-react";
 import { useConversationId } from "../hooks/context/useConversationId";
+import { useGptApi } from "../hooks/context/useGptApi";
 import { useConversation } from "../hooks/store/get/useConversation";
 import { useAddMessage } from "../hooks/store/set/useAddMessage";
 import { useAppModel } from "../store/store";
@@ -16,14 +17,28 @@ export const ChatComponent = () => {
 		conversation = useConversation(conversationId)!,
 		addMessage = useAddMessage(conversationId);
 
+	const api = useGptApi();
+
 	const handleSend = (message: string) => {
-		console.log(message);
-		addMessage({
+		const msg = {
 			message: message,
 			sender: "user",
 			direction: "outgoing",
 			position: "single",
-		});
+		};
+
+		api
+			.reply({
+				...conversation,
+				messages: [...conversation.messages, msg],
+			})
+			.then((message) => {
+				if (message) {
+					addMessage(message);
+				}
+			});
+
+		addMessage(msg);
 	};
 
 	return (

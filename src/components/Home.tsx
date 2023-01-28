@@ -11,7 +11,7 @@ export const HomeComponent = () => {
 		<MainContainer responsive>
 			<SidebarComponent />
 			<ConversationIdContext.Provider value={activeConversationId}>
-				<ChatComponent />
+				{activeConversationId === "-1" ? <></> : <ChatComponent />}
 			</ConversationIdContext.Provider>
 		</MainContainer>
 	);
