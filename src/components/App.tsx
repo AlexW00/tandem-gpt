@@ -4,12 +4,16 @@ import { ChatProviderComponent } from "./ChatProvider";
 import { ChatComponent } from "./Chat";
 import { HomeComponent } from "./Home";
 
+import { ChakraProvider } from "@chakra-ui/react";
+
 const App = () => (
-	<div style={{ position: "relative", height: "100%" }}>
-		<ChatProviderComponent>
-			<HomeComponent />
-		</ChatProviderComponent>
-	</div>
+	<ChakraProvider>
+		<div style={{ position: "relative", height: "100%" }}>
+			<ChatProviderComponent>
+				<HomeComponent />
+			</ChatProviderComponent>
+		</div>
+	</ChakraProvider>
 );
 
 export default App;

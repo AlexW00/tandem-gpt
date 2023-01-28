@@ -1,10 +1,5 @@
 import { MessageModel } from "@chatscope/chat-ui-kit-react";
-
-export enum Language {
-	en = "English",
-	de = "Deutsch",
-	jp = "Japanese",
-}
+import { Language } from "../classes/Language";
 
 export type StudyInfo = {
 	speaks: Language;
@@ -19,6 +14,7 @@ export interface Participant {
 
 export interface Bot extends Participant {
 	description: string;
+	prompt: string;
 }
 
 export type Message = MessageModel;
@@ -29,9 +25,15 @@ export interface Conversation {
 	messages: MessageModel[];
 }
 
+export interface Preferences {
+	appLanguage: Language;
+	defaultLanguage: Language;
+}
+
 export interface AppModel {
 	conversations: Conversation[];
 	activeConversationId: string;
+	preferences: Preferences;
 }
 
 // Default
@@ -48,6 +50,7 @@ export const DefaultAppModel: AppModel = {
 					speaks: Language.en,
 					learns: Language.de,
 				},
+				prompt: "Homework",
 			},
 			messages: [
 				{
@@ -68,12 +71,13 @@ export const DefaultAppModel: AppModel = {
 			id: "2",
 			bot: {
 				name: "Bot 2",
-				avatar: "https://i.pravatar.cc/150?img=1",
+				avatar: "https://i.pravatar.cc/150?img=2",
 				description: "I am another bot",
 				studyInfo: {
 					speaks: Language.en,
 					learns: Language.de,
 				},
+				prompt: "Sausage",
 			},
 			messages: [
 				{
@@ -86,4 +90,8 @@ export const DefaultAppModel: AppModel = {
 		},
 	],
 	activeConversationId: "1",
+	preferences: {
+		appLanguage: Language.en,
+		defaultLanguage: Language.jp,
+	},
 };
