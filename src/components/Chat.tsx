@@ -45,6 +45,7 @@ export const ChatComponent = ({
 		api
 			.reply({
 				...conversation,
+				// @ts-ignore
 				messages: [...conversation.messages, msg],
 			})
 			.then((message) => {
