@@ -15,8 +15,10 @@ import { SettingsButtonComponent } from "./atomic/SettingsButton";
 
 export const SidebarComponent = ({
 	onClickSettingsButton,
+	style,
 }: {
 	onClickSettingsButton: () => void;
+	style?: React.CSSProperties;
 }) => {
 	const conversations = useConversations(),
 		setActiveConversationId = useSetActiveConversationId();
@@ -38,7 +40,7 @@ export const SidebarComponent = ({
 				isOpen={doShowAddConversationModal}
 				onClose={handleCloseAddConversationModal}
 			/>
-			<Sidebar position="left" scrollable={false}>
+			<Sidebar position="left" scrollable={false} style={style}>
 				<ConversationList>
 					{conversations.map((c, i) => (
 						<Conversation
@@ -54,7 +56,12 @@ export const SidebarComponent = ({
 						</Conversation>
 					))}
 				</ConversationList>
-				<Flex margin="0.4rem" gap="0.3rem">
+				<Flex
+					margin="0.4rem"
+					gap="0.3rem"
+					// change flex direction if width is too small
+					direction={{ base: "column", md: "row" }}
+				>
 					<AddConversationButtonComponent
 						onClick={handleAddConversationClicked}
 					/>

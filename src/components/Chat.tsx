@@ -18,7 +18,13 @@ import { useSetTyping } from "../hooks/store/set/useSetTyping";
 import { strings } from "../res/strings";
 import { useAppModel } from "../store/store";
 
-export const ChatComponent = () => {
+export const ChatComponent = ({
+	onBackClicked,
+	isSidebarVisible,
+}: {
+	onBackClicked: () => void;
+	isSidebarVisible: boolean;
+}) => {
 	const conversationId = useConversationId(),
 		isTyping = useIsTyping(conversationId),
 		setTyping = useSetTyping(conversationId),
@@ -52,9 +58,20 @@ export const ChatComponent = () => {
 		setTyping(true);
 	};
 
+	const handleBackClicked = () => {
+		onBackClicked();
+	};
+
 	return (
 		<ChatContainer>
 			<ConversationHeader>
+				<ConversationHeader.Back
+					onClick={handleBackClicked}
+					// rotate 180 degrees if sidebar is visible
+					style={{
+						transform: isSidebarVisible ? "rotate(0deg)" : "rotate(180deg)",
+					}}
+				/>
 				<Avatar src={conversation.bot.avatar} name={conversation.bot.name} />
 				<ConversationHeader.Content
 					userName={conversation.bot.name}

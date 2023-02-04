@@ -10,7 +10,7 @@ export const useAppModel = create(
 		})),
 		{
 			name: "default-storage", // unique name
-			storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+			storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
 		}
 	)
 );
