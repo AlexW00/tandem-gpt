@@ -6,9 +6,7 @@ export const SettingsButtonComponent = ({
 }: {
 	onClick: () => void;
 }) => (
-	<Button
-		leftIcon={<SettingsIcon color={"blackAlpha.600"} />}
-		onClick={onClick}
-		flexGrow={1}
-	></Button>
+	<Button onClick={onClick} flexGrow={1}>
+		<SettingsIcon color={"blackAlpha.600"} />
+	</Button>
 );
