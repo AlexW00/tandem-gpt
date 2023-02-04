@@ -4,6 +4,7 @@ import { ConversationIdContext } from "../contexts/ConversationIdContext";
 import { useGptApi } from "../hooks/context/useGptApi";
 import { useActiveConversationId } from "../hooks/store/get/useActiveConversationId";
 import { useApiKey } from "../hooks/store/get/useApiKey";
+import { useConversations } from "../hooks/store/get/useConversations";
 import { ChatComponent } from "./Chat";
 import { SettingsModalComponent } from "./SettingsModal";
 import { SidebarComponent } from "./Sidebar";
@@ -19,11 +20,17 @@ export const HomeComponent = () => {
 	const [conversationContentStyle, setConversationContentStyle] = useState({});
 	const [conversationAvatarStyle, setConversationAvatarStyle] = useState({});
 
+	const conversations = useConversations();
 	const handleConversationClick = useCallback(() => {
 		if (sidebarVisible) {
 			setSidebarVisible(false);
 		}
 	}, [sidebarVisible, setSidebarVisible]);
+
+	// hotfix to show sidebar when there are no conversations
+	useEffect(() => {
+		if (conversations.length === 0) setSidebarVisible(true);
+	}, [conversations]);
 
 	useEffect(() => {
 		if (sidebarVisible) {
