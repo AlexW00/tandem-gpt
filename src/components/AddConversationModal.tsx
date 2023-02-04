@@ -13,8 +13,9 @@ import {
 	useToast,
 } from "@chakra-ui/react";
 import { Button } from "@chatscope/chat-ui-kit-react";
-import React from "react";
-import { getFlag, Language } from "../classes/Language";
+import React, { useEffect } from "react";
+import { useMemo } from "react";
+import { getCode, getFlag, Language } from "../classes/Language";
 import { useGptApi } from "../hooks/context/useGptApi";
 import { useAppLanguage } from "../hooks/store/get/useAppLanguage";
 import { useDefaultLanguage } from "../hooks/store/get/useDefaultLanguage";
@@ -22,6 +23,7 @@ import { useAddConversation } from "../hooks/store/set/useAddConversation";
 import { useAddMessage } from "../hooks/store/set/useAddMessage";
 import { useSetTyping } from "../hooks/store/set/useSetTyping";
 import { useNewAvatar } from "../hooks/util/useNewAvatar";
+import { strings } from "../res/strings";
 import { Conversation } from "../store/AppModel";
 
 export const AddConversationModal = ({
@@ -44,6 +46,15 @@ export const AddConversationModal = ({
 	const [prompt, setPrompt] = React.useState<string>("");
 	const [language, setLanguage] = React.useState<Language>(defaultLanguage);
 
+	const examplePlaceholder = useMemo(
+		() => strings.getString("placeholders.prompt", getCode(language)),
+		[language]
+	);
+
+	useEffect(() => {
+		setLanguage(defaultLanguage);
+	}, [defaultLanguage]);
+
 	const ts = Date.now().toString();
 
 	const addConversation = useAddConversation(),
@@ -57,7 +68,7 @@ export const AddConversationModal = ({
 
 	const showEmptyPromptToast = () => {
 		toast({
-			title: "Prompt cannot be empty.",
+			title: strings.errors.mustFillOutAllFields,
 			status: "error",
 			duration: 3000,
 			isClosable: true,
@@ -66,7 +77,7 @@ export const AddConversationModal = ({
 
 	const showAddedConversationToast = () => {
 		toast({
-			title: "Created new conversation.",
+			title: strings.success.createdNewConversation,
 			status: "success",
 			duration: 3000,
 			isClosable: true,
@@ -89,7 +100,7 @@ export const AddConversationModal = ({
 			bot: {
 				name: prompt,
 				avatar: createAvatar(prompt),
-				description: getFlag(language) + " " + language,
+				description: getFlag(language),
 				prompt: prompt,
 				isTyping: true,
 				studyInfo: {
@@ -125,21 +136,21 @@ export const AddConversationModal = ({
 		>
 			<ModalOverlay />
 			<ModalContent>
-				<ModalHeader>Create Conversation</ModalHeader>
+				<ModalHeader>{strings.titles.createConversation}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody pb={6}>
 					<FormControl>
-						<FormLabel>What did you learn?</FormLabel>
+						<FormLabel>{strings.titles.prompt}</FormLabel>
 						<Input
 							ref={initialRef}
 							value={prompt}
 							onChange={(e) => setPrompt(e.target.value)}
-							placeholder="Homework, sausage, beans"
+							placeholder={examplePlaceholder}
 						/>
 					</FormControl>
 
 					<FormControl mt={4}>
-						<FormLabel>Language</FormLabel>
+						<FormLabel>{strings.titles.language}</FormLabel>
 						<Select onChange={handleFormChange} value={language}>
 							{Object.values(Language).map((lang) => (
 								<option key={lang} value={lang}>
@@ -151,8 +162,8 @@ export const AddConversationModal = ({
 				</ModalBody>
 
 				<ModalFooter>
-					<Button onClick={onClose}>Cancel</Button>
-					<Button onClick={handleSaveClicked}>Save</Button>
+					<Button onClick={onClose}>{strings.buttons.cancel}</Button>
+					<Button onClick={handleSaveClicked}>{strings.buttons.save}</Button>
 				</ModalFooter>
 			</ModalContent>
 		</Modal>

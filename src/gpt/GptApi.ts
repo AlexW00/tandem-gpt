@@ -87,7 +87,7 @@ const concatConversation = (conversation: Conversation): string => {
 };
 
 const generateReplyPrompt = (conversation: Conversation): string => {
-	const start = `Imagine you are my ${conversation.bot.studyInfo.speaks} tutor. I am ${conversation.bot.studyInfo.learns} and you are an ${conversation.bot.studyInfo.speaks} speaker. You teach me your language by sending me texts in a chat. Whenever I make a mistake, tell me I made one and teach me how to correct it. I recently learned the following: "${conversation.bot.prompt}". Before replying, check my message for mistakes.`,
+	const start = `Imagine you are my ${conversation.bot.studyInfo.speaks} tutor. I am ${conversation.bot.studyInfo.learns} and you are an ${conversation.bot.studyInfo.speaks} speaker. You teach me your language by sending me texts in a chat. Before replying, check my message for mistakes. Whenever I make a mistake, tell me I made one and teach me how to correct it. When I don't understand something, explain it to me in ${conversation.bot.studyInfo.learns}. Otherwise, continue on the conversation.`,
 		header = generateConvoHeader(conversation),
 		messages = concatConversation(conversation),
 		prompt =

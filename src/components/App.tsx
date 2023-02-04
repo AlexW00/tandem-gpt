@@ -5,9 +5,16 @@ import { HomeComponent } from "./Home";
 import { ChakraProvider } from "@chakra-ui/react";
 import { GptApiContext } from "../contexts/GptApiContext";
 import GptApi from "../gpt/GptApi";
+import { strings } from "../res/strings";
+import { useAppLanguage } from "../hooks/store/get/useAppLanguage";
+import { getCode } from "../classes/Language";
+import { useMemo } from "react";
 
 const App = () => {
-	const api = new GptApi();
+	const api = new GptApi(),
+		appLanguage = useAppLanguage();
+
+	useMemo(() => strings.setLanguage(getCode(appLanguage)), [appLanguage]);
 
 	return (
 		<ChakraProvider>

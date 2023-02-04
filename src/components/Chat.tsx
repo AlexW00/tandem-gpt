@@ -1,3 +1,4 @@
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
 	ChatContainer,
 	MessageList,
@@ -14,6 +15,7 @@ import { useConversation } from "../hooks/store/get/useConversation";
 import { useIsTyping } from "../hooks/store/get/useIsTyping";
 import { useAddMessage } from "../hooks/store/set/useAddMessage";
 import { useSetTyping } from "../hooks/store/set/useSetTyping";
+import { strings } from "../res/strings";
 import { useAppModel } from "../store/store";
 
 export const ChatComponent = () => {
@@ -60,7 +62,9 @@ export const ChatComponent = () => {
 				/>
 			</ConversationHeader>
 			<MessageList
-				typingIndicator={isTyping ? <TypingIndicator content="typing" /> : null}
+				typingIndicator={
+					isTyping ? <TypingIndicator content={strings.tips.typing} /> : null
+				}
 			>
 				{conversation.messages.map((message, index) => (
 					<Message model={message} key={index} />
@@ -68,7 +72,7 @@ export const ChatComponent = () => {
 			</MessageList>
 			<MessageInput
 				attachButton={false}
-				placeholder="Type message here"
+				placeholder={strings.placeholders.type}
 				onSend={handleSend}
 			/>
 		</ChatContainer>

@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Button, Flex, Icon } from "@chakra-ui/react";
 import {
 	ConversationList,
 	Conversation,
@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import { useConversations } from "../hooks/store/get/useConversations";
 import { useSetActiveConversationId } from "../hooks/store/set/useSetActiveConversationId";
+import { strings } from "../res/strings";
 import { AddConversationModal } from "./AddConversationModal";
 import { AddConversationButtonComponent } from "./atomic/AddConversationButton";
 import { SettingsButtonComponent } from "./atomic/SettingsButton";

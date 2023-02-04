@@ -28,6 +28,7 @@ import { useDefaultLanguage } from "../hooks/store/get/useDefaultLanguage";
 import { useSetApiKey } from "../hooks/store/set/useSetApiKey";
 import { useSetAppLanguage } from "../hooks/store/set/useSetAppLanguage";
 import { useSetDefaultLanguage } from "../hooks/store/set/useSetDefaultLanguage";
+import { strings } from "../res/strings";
 
 export const SettingsModalComponent = ({
 	isOpen,
@@ -70,7 +71,7 @@ export const SettingsModalComponent = ({
 
 	const showSettingsSavedToast = () => {
 		toast({
-			title: "Settings saved.",
+			title: strings.success.settingsSaved,
 			status: "success",
 			duration: 3000,
 			isClosable: true,
@@ -79,7 +80,7 @@ export const SettingsModalComponent = ({
 
 	const showMustFillOutToast = () => {
 		toast({
-			title: "You must fill out all fields.",
+			title: strings.errors.mustFillOutAllFields,
 			status: "error",
 			duration: 3000,
 			isClosable: true,
@@ -119,11 +120,11 @@ export const SettingsModalComponent = ({
 		>
 			<ModalOverlay />
 			<ModalContent>
-				<ModalHeader>Settings</ModalHeader>
+				<ModalHeader>{strings.titles.settings}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody pb={6}>
 					<FormControl isInvalid={doShowApiKeyError}>
-						<FormLabel>OpenAI Api Key</FormLabel>
+						<FormLabel>{strings.titles.apiKey}</FormLabel>
 
 						<Flex alignItems="center">
 							<Input
@@ -138,22 +139,24 @@ export const SettingsModalComponent = ({
 
 						{!doShowApiKeyError ? (
 							<FormHelperText>
-								You can find your OpenAI API key{" "}
+								{strings.tips.apiKey}
 								<Link
 									color={"blue.500"}
 									href="https://platform.openai.com/account/api-keys"
 									isExternal
 								>
-									here <ExternalLinkIcon mx="2px" />
+									OpenAI <ExternalLinkIcon mx="2px" />
 								</Link>
 							</FormHelperText>
 						) : (
-							<FormErrorMessage>Invalid API key.</FormErrorMessage>
+							<FormErrorMessage>
+								{strings.errors.invalidApiKey}
+							</FormErrorMessage>
 						)}
 					</FormControl>
 
 					<FormControl mt={4}>
-						<FormLabel>App language</FormLabel>
+						<FormLabel>{strings.titles.appLanguage}</FormLabel>
 
 						<Select onChange={handleAppLanguageChange} value={appLanguage}>
 							{Object.values(Language).map((lang) => (
@@ -165,7 +168,7 @@ export const SettingsModalComponent = ({
 					</FormControl>
 
 					<FormControl mt={4}>
-						<FormLabel>Default chat language</FormLabel>
+						<FormLabel>{strings.titles.defaultChatLanguage}</FormLabel>
 
 						<Select
 							onChange={handleDefaultLanguageChange}
@@ -181,8 +184,10 @@ export const SettingsModalComponent = ({
 				</ModalBody>
 
 				<ModalFooter>
-					{doAllowClose ?? <Button onClick={handleClose}>Cancel</Button>}
-					<Button onClick={handleSaveClicked}>Save</Button>
+					{doAllowClose ?? (
+						<Button onClick={handleClose}>{strings.buttons.cancel}</Button>
+					)}
+					<Button onClick={handleSaveClicked}>{strings.buttons.save}</Button>
 				</ModalFooter>
 			</ModalContent>
 		</Modal>

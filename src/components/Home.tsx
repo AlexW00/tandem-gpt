@@ -1,5 +1,5 @@
 import { MainContainer } from "@chatscope/chat-ui-kit-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ConversationIdContext } from "../contexts/ConversationIdContext";
 import { useGptApi } from "../hooks/context/useGptApi";
 import { useActiveConversationId } from "../hooks/store/get/useActiveConversationId";
@@ -12,6 +12,12 @@ export const HomeComponent = () => {
 	const activeConversationId = useActiveConversationId();
 	const gpt = useGptApi();
 	const apiKey = useApiKey();
+
+	useEffect(() => {
+		if (apiKey !== undefined) {
+			gpt.setKey(apiKey);
+		}
+	}, [apiKey, gpt]);
 
 	const doAllowCloseSettingsModal = useMemo(
 		() => apiKey !== undefined,
