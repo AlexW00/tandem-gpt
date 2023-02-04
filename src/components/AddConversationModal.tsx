@@ -1,5 +1,4 @@
 import {
-	useDisclosure,
 	Modal,
 	ModalOverlay,
 	ModalContent,

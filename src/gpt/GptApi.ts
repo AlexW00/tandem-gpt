@@ -118,6 +118,19 @@ class GptApi {
 		this.openai = new OpenAIApi(this.configuration);
 	}
 
+	hasKey = (): boolean => {
+		return this.openai !== undefined;
+	};
+
+	isValidKey = async (): Promise<boolean> => {
+		try {
+			const models = await this.openai?.listModels();
+			return models !== undefined;
+		} catch (e) {
+			return false;
+		}
+	};
+
 	start = async (conversation: Conversation): Promise<Message | undefined> => {
 		if (this.openai) {
 			const prompt = generateStartPrompt(conversation);

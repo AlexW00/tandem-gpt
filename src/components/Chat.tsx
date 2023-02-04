@@ -6,6 +6,7 @@ import {
 	Avatar,
 	ConversationHeader,
 	TypingIndicator,
+	MessageModel,
 } from "@chatscope/chat-ui-kit-react";
 import { useConversationId } from "../hooks/context/useConversationId";
 import { useGptApi } from "../hooks/context/useGptApi";
@@ -45,7 +46,7 @@ export const ChatComponent = () => {
 				}
 			});
 
-		addMessage(msg);
+		addMessage(msg as MessageModel);
 		setTyping(true);
 	};
 
