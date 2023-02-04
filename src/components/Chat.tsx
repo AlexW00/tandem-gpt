@@ -25,8 +25,9 @@ export const ChatComponent = () => {
 	const api = useGptApi();
 
 	const handleSend = (message: string) => {
+		const cleanMsg = message.trim().replace(/<br>/gi, "");
 		const msg = {
-			message: message,
+			message: cleanMsg,
 			sender: "user",
 			direction: "outgoing",
 			position: "single",
