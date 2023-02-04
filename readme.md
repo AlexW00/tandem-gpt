@@ -24,4 +24,4 @@ All data is only stored in your browser's local storage, and the app communicate
 ### 👨‍💻 Status & Development
 
 This is a mvp version to test the concept. For more info see [this post](https://www.alexanderweichart.de/3_Resources/Ideas/lib/%F0%9F%92%A1+GPT3+Tandem).
-Feel free to contribute code or ideas via pull requests or issues.
+Feel free to contribute code or ideas via pull requests or issues. Please excuse the messy source code in some places.
