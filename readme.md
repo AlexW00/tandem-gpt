@@ -7,7 +7,7 @@ A virtual tandem partner to practice new vocab/grammar with.
 
 ### ⚡️ Quickstart:
 
-1. Visit the [live demo]()
+1. Visit the [live demo](https://alexw00.github.io/tandem-gpt/)
 2. Enter your OpenAI API key to complete the setup
 3. Create new chats with vocab/grammar you wish to practice
 
