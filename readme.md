@@ -2,7 +2,7 @@
 
 A virtual tandem partner to practice new vocab/grammar with.
 
-→ Check out the [live version](https://alexw00.github.io/gpt-tandem).
+→ Check out the [live version](https://alexw00.github.io/tandem-gpt/).
 
 ### Status
 
