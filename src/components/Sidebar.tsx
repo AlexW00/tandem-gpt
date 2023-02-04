@@ -1,3 +1,4 @@
+import { Flex } from "@chakra-ui/react";
 import {
 	ConversationList,
 	Conversation,
@@ -9,8 +10,13 @@ import { useConversations } from "../hooks/store/get/useConversations";
 import { useSetActiveConversationId } from "../hooks/store/set/useSetActiveConversationId";
 import { AddConversationModal } from "./AddConversationModal";
 import { AddConversationButtonComponent } from "./atomic/AddConversationButton";
+import { SettingsButtonComponent } from "./atomic/SettingsButton";
 
-export const SidebarComponent = () => {
+export const SidebarComponent = ({
+	onClickSettingsButton,
+}: {
+	onClickSettingsButton: () => void;
+}) => {
 	const conversations = useConversations(),
 		setActiveConversationId = useSetActiveConversationId();
 
@@ -47,9 +53,14 @@ export const SidebarComponent = () => {
 						</Conversation>
 					))}
 				</ConversationList>
-				<AddConversationButtonComponent
-					onClick={handleAddConversationClicked}
-				/>
+				<Flex margin="0.4rem" gap="0.3rem">
+					<AddConversationButtonComponent
+						onClick={handleAddConversationClicked}
+					/>
+					<SettingsButtonComponent
+						onClick={onClickSettingsButton}
+					></SettingsButtonComponent>
+				</Flex>
 			</Sidebar>
 		</>
 	);

@@ -155,7 +155,7 @@ export const SettingsModalComponent = ({
 					<FormControl mt={4}>
 						<FormLabel>App language</FormLabel>
 
-						<Select onChange={handleDefaultLanguageChange} value={appLanguage}>
+						<Select onChange={handleAppLanguageChange} value={appLanguage}>
 							{Object.values(Language).map((lang) => (
 								<option key={lang} value={lang}>
 									{getFlag(lang) + " " + lang}
@@ -167,7 +167,10 @@ export const SettingsModalComponent = ({
 					<FormControl mt={4}>
 						<FormLabel>Default chat language</FormLabel>
 
-						<Select onChange={handleAppLanguageChange} value={defaultLanguage}>
+						<Select
+							onChange={handleDefaultLanguageChange}
+							value={defaultLanguage}
+						>
 							{Object.values(Language).map((lang) => (
 								<option key={lang} value={lang}>
 									{getFlag(lang) + " " + lang}

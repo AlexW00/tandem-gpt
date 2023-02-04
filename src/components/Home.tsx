@@ -1,5 +1,5 @@
 import { MainContainer } from "@chatscope/chat-ui-kit-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ConversationIdContext } from "../contexts/ConversationIdContext";
 import { useGptApi } from "../hooks/context/useGptApi";
 import { useActiveConversationId } from "../hooks/store/get/useActiveConversationId";
@@ -13,23 +13,29 @@ export const HomeComponent = () => {
 	const gpt = useGptApi();
 	const apiKey = useApiKey();
 
-	const [doShowSettingsModal, setShowSettingsModal] = useState(!gpt.hasKey());
+	const doAllowCloseSettingsModal = useMemo(
+		() => apiKey !== undefined,
+		[apiKey]
+	);
+
+	const [doShowSettingsModal, setShowSettingsModal] = useState(
+		!doAllowCloseSettingsModal
+	);
 	const onCloseSettingsModal = () => {
 		setShowSettingsModal(false);
 	};
 
-	const [doAllowCloseSettingsModal] = useState(apiKey !== undefined);
-
 	return (
 		<MainContainer responsive>
-			{!doAllowCloseSettingsModal && (
-				<SettingsModalComponent
-					isOpen={doShowSettingsModal}
-					onClose={onCloseSettingsModal}
-					doAllowClose={doAllowCloseSettingsModal}
-				/>
-			)}
-			<SidebarComponent />
+			<SettingsModalComponent
+				isOpen={doShowSettingsModal}
+				onClose={onCloseSettingsModal}
+				doAllowClose={doAllowCloseSettingsModal}
+			/>
+
+			<SidebarComponent
+				onClickSettingsButton={() => setShowSettingsModal(!doShowSettingsModal)}
+			/>
 			<ConversationIdContext.Provider value={activeConversationId}>
 				{activeConversationId === "-1" ? <></> : <ChatComponent />}
 			</ConversationIdContext.Provider>

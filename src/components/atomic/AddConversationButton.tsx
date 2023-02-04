@@ -6,11 +6,7 @@ export const AddConversationButtonComponent = ({
 }: {
 	onClick: () => void;
 }) => (
-	<Button
-		leftIcon={<AddIcon color={"blackAlpha.600"} />}
-		onClick={onClick}
-		marginBottom="0.5rem"
-		marginLeft="1rem"
-		marginRight="1rem"
-	></Button>
+	<Button onClick={onClick} flexGrow={40}>
+		<AddIcon color={"blackAlpha.600"} />
+	</Button>
 );
