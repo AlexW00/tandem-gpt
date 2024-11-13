@@ -17,6 +17,7 @@ import { useAddMessage } from "../hooks/store/set/useAddMessage";
 import { useSetTyping } from "../hooks/store/set/useSetTyping";
 import { strings } from "../res/strings";
 import { useAppModel } from "../store/store";
+import { MessageContent } from "./MessageContent";
 
 export const ChatComponent = ({
 	onBackClicked,
@@ -48,9 +49,9 @@ export const ChatComponent = ({
 				// @ts-ignore
 				messages: [...conversation.messages, msg],
 			})
-			.then((message) => {
-				if (message) {
-					addMessage(message);
+			.then((response) => {
+				if (response) {
+					addMessage(response);
 					setTyping(false);
 				}
 			});
@@ -85,7 +86,16 @@ export const ChatComponent = ({
 				}
 			>
 				{conversation.messages.map((message, index) => (
-					<Message model={message} key={index} />
+					<Message model={message} key={index} >
+						<Message.CustomContent>
+							<MessageContent message={
+								{
+									...message,
+									annotations: conversation.messages[index + 1]?.annotations,
+								}
+							} />
+						</Message.CustomContent>
+					</Message>
 				))}
 			</MessageList>
 			<MessageInput

@@ -18,7 +18,11 @@ export interface Bot extends Participant {
 	isTyping: boolean;
 }
 
-export type Message = MessageModel;
+export interface Message extends MessageModel {
+	annotations?: any;
+}
+
+// export type Message = MessageModel;
 
 export interface Conversation {
 	id: string;
